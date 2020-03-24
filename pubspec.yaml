@@ -1,0 +1,30 @@
+name: translation_app_provider
+description: A new Flutter application.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.3.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^0.1.2
+  speech_to_text:
+  firebase_mlkit_language:
+    git: https://github.com/mi6ock/firebase_mlkit_language
+  flutter_tts:
+  shared_preferences:
+  flutter_localizations:
+    sdk: flutter
+  flutter_cupertino_localizations:
+  auto_size_text:
+  provider:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  intl_translation:
+
+flutter:
+  uses-material-design: true

@@ -21,12 +21,15 @@ void main() async {
         ChangeNotifierProxyProvider<LanguageNotifier,
             SpeechAndListeningNotifier>(
           create: (context) {
-            var speechAndListeningNotifier = SpeechAndListeningNotifier();
+            var speechAndListeningNotifier =
+                SpeechAndListeningNotifier();
             speechAndListeningNotifier.initListening();
             return speechAndListeningNotifier;
           },
           update: (context, language, speechModel) =>
-              speechModel..sortedLanguages = language.sortedLanguages,
+              speechModel
+                ..sortedLanguages =
+                    language.sortedLanguages,
         ),
       ],
       child: MyApp(),
@@ -63,6 +66,10 @@ class MyApp extends StatelessWidget {
               builder: (context) => SelectLanguage(),
               fullscreenDialog: true,
             );
+          default:
+            return MaterialPageRoute(
+              builder: (context) => HomeScreen(),
+            );
         }
       },
       theme: ThemeData(
@@ -72,14 +79,17 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class _MyLocalizationsDelegate extends LocalizationsDelegate<Strings> {
+class _MyLocalizationsDelegate
+    extends LocalizationsDelegate<Strings> {
   const _MyLocalizationsDelegate();
 
   @override
-  bool isSupported(Locale locale) => ['en', 'ja'].contains(locale.languageCode);
+  bool isSupported(Locale locale) =>
+      ['en', 'ja'].contains(locale.languageCode);
 
   @override
-  Future<Strings> load(Locale locale) => Strings.load(locale);
+  Future<Strings> load(Locale locale) =>
+      Strings.load(locale);
 
   @override
   bool shouldReload(_MyLocalizationsDelegate old) => false;

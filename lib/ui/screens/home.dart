@@ -12,8 +12,6 @@ import 'package:translation_app_provider/ui/widgets/select_language.dart';
 class HomeScreen extends StatelessWidget {
   static const routeName = "/";
 
-  String listeningLanguage = "";
-
   Dialogs dialogs = Dialogs();
 
   @override

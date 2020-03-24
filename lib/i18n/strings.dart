@@ -4,6 +4,10 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:translation_app_provider/i18n/messages_all.dart';
 
+/// 多言語化で使うクラス
+///
+/// [load]やスタティックメソッドはほぼ決まり切ったコードになっている
+///
 class Strings {
   static Future<Strings> load(Locale locale) {
     final String name = locale.countryCode.isEmpty
@@ -13,7 +17,7 @@ class Strings {
         Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
-      return new Strings();
+      return Strings();
     });
   }
 
@@ -21,7 +25,9 @@ class Strings {
     return Localizations.of<Strings>(context, Strings);
   }
 
-  static final Strings instance = new Strings();
+  static final Strings instance = Strings();
+
+  /// ここから多言語化したい文字列を追加していく
 
   String get aboutDialogFooter => Intl.message(
       "We\'ll take turns talking and "

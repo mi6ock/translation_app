@@ -5,20 +5,29 @@ import 'package:translation_app_provider/util/translation.dart';
 
 enum ModelState { notExist, changing, exist }
 
+/// 言語モデルを選択、ダウンロード、削除できるアイテム
+///
+///
+
 class SelectModelListItem extends StatefulWidget {
   final String languageCode;
   ModelState modelState;
   final bool isSelected;
 
   SelectModelListItem(
-      {Key key, this.languageCode, this.modelState, this.isSelected})
+      {Key key,
+      this.languageCode,
+      this.modelState,
+      this.isSelected})
       : super(key: key);
 
   @override
-  _SelectModelListItemState createState() => _SelectModelListItemState();
+  _SelectModelListItemState createState() =>
+      _SelectModelListItemState();
 }
 
-class _SelectModelListItemState extends State<SelectModelListItem> {
+class _SelectModelListItemState
+    extends State<SelectModelListItem> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -31,28 +40,38 @@ class _SelectModelListItemState extends State<SelectModelListItem> {
             height: 32,
             width: size.width,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment:
+                  MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Row(
                   children: <Widget>[
                     SizedBox(
                       width: 60,
-                      child: widget.isSelected ? Icon(Icons.check) : SizedBox(),
+                      child: widget.isSelected
+                          ? Icon(Icons.check)
+                          : SizedBox(),
                     ),
                     Text(
-                      Strings.of(context).languageString(widget.languageCode),
-                      style: Theme.of(context).textTheme.body1,
+                      Strings.of(context).languageString(
+                          widget.languageCode),
+                      // bodyText2でエラーだったらbody1に変更
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2,
                     ),
                   ],
                 ),
                 if (widget.modelState == ModelState.exist)
                   IconButton(
                     icon: Icon(Icons.delete),
-                    onPressed: () => _deleteModel(widget.languageCode),
+                    onPressed: () =>
+                        _deleteModel(widget.languageCode),
                   )
-                else if (widget.modelState == ModelState.changing)
+                else if (widget.modelState ==
+                    ModelState.changing)
                   Padding(
-                    padding: const EdgeInsets.only(right: 12),
+                    padding:
+                        const EdgeInsets.only(right: 12),
                     child: SizedBox(
                       height: 24,
                       width: 24,
@@ -62,7 +81,8 @@ class _SelectModelListItemState extends State<SelectModelListItem> {
                 else
                   IconButton(
                     icon: Icon(Icons.file_download),
-                    onPressed: () => _fetchModel(widget.languageCode),
+                    onPressed: () =>
+                        _fetchModel(widget.languageCode),
                   )
               ],
             ),
@@ -80,7 +100,8 @@ class _SelectModelListItemState extends State<SelectModelListItem> {
     setState(() {
       widget.modelState = ModelState.changing;
     });
-    if ((await MLTranslation.downloadModel(languageCode)) == "Downloaded") {
+    if ((await MLTranslation.downloadModel(languageCode)) ==
+        "Downloaded") {
       widget.modelState = ModelState.exist;
     } else {
       widget.modelState = ModelState.notExist;
@@ -92,7 +113,8 @@ class _SelectModelListItemState extends State<SelectModelListItem> {
     setState(() {
       widget.modelState = ModelState.changing;
     });
-    if ((await MLTranslation.deleteModel(languageCode)) == "Deleted") {
+    if ((await MLTranslation.deleteModel(languageCode)) ==
+        "Deleted") {
       widget.modelState = ModelState.notExist;
     } else {
       widget.modelState = ModelState.exist;

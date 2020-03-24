@@ -13,7 +13,7 @@ class SpeechAndListeningNotifier extends ChangeNotifier {
   final FlutterTts tts = FlutterTts();
   final MLTranslation mlTranslation = MLTranslation();
 
-  Dialogs dialogs = Dialogs();
+  final Dialogs dialogs = Dialogs();
 
   AudioState audioState = AudioState.waiting;
 
@@ -21,15 +21,16 @@ class SpeechAndListeningNotifier extends ChangeNotifier {
   double leftSoundLevel = 0;
   double rightSoundLevel = 0;
 
-  bool listeningLeftLang = true;
+  // 言語コードリスト、language_notifierから
   List<String> sortedLanguages;
-  String listeningLanguage;
+  // 左側のボタンで録音されているかを一時的に保存する変数
+  bool listeningLeftLang = true;
+  // 初期化に成功したか
   bool hasSpeech = false;
 
+  // 音声認識結果や翻訳結果を保存する変数
   String leftText = "";
   String rightText = "";
-
-  SpeechAndListeningNotifier();
 
   Future<void> initListening() async {
     hasSpeech = await stt.initialize(
@@ -72,7 +73,6 @@ class SpeechAndListeningNotifier extends ChangeNotifier {
           onSoundLevelChange: soundLevelListener);
 
       audioState = AudioState.listening;
-      listeningLanguage = languageCode;
       notifyListeners();
       return true;
     } else {
@@ -99,7 +99,7 @@ class SpeechAndListeningNotifier extends ChangeNotifier {
     String translated;
     if (result.recognizedWords != null &&
         result.finalResult) {
-      if (sortedLanguages[0] == listeningLanguage) {
+      if (listeningLeftLang) {
         mlTranslation.init(
             sortedLanguages[0], sortedLanguages[1]);
         translated = await mlTranslation

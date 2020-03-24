@@ -12,7 +12,7 @@ class LanguageNotifier extends ChangeNotifier {
 
   /// sharedPreferencesからソートされている言語コードを読み込む
   ///
-  /// 空だったらの配列を読み込む
+  /// 保存されていなかった場合は空の配列を使う
   init() async {
     SharedPreferences preferences =
         await SharedPreferences.getInstance();

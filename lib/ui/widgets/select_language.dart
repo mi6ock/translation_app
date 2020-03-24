@@ -27,8 +27,8 @@ class SelectLanguage extends StatelessWidget {
         ),
       ),
 
-      /// FutureBuilderを使うことで、Future関数の戻り値が
-      /// 取得を監視
+      /// FutureBuilderを使うことで、Future関数の戻り値の
+      /// 読み込みを検知
       body: FutureBuilder<List<Widget>>(
         future: _buildModelList(languages.sortedLanguages),
         builder: (context, snapshot) {
